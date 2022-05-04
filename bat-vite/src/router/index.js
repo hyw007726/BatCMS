@@ -1,13 +1,26 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue";
 const routes = [
-    //     {
-    //     path: '/',
-    //     redirect: '/dashboard'
-    // },
     {
-        // path: "/login",
+        path: '/',
+        redirect: '/dashboard'
+    },
+    {
         path: "/",
+        name: "Home",
+        component: Home,
+        children: [
+            {
+                path: "/dashboard",
+                name: "dashboard",
+                meta: {
+                    title: '系统首页'
+                },
+                component: () => import( /* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
+            }]
+    },
+    {
+        path: "/login",
         name: "Login",
         meta: {
             title: '登录'
@@ -28,7 +41,7 @@ router.beforeEach((to, from, next) => {
         next('/login');
     } else if (to.meta.permission) {
         // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
-        role === 'admin'
+        role === 'wesley'
             ? next()
             : next('/403');
     } else {
