@@ -39,7 +39,8 @@
         </template>
         <template v-else>
           <el-menu-item :index="item.index" :key="item.index">
-            <i :class="item.icon"></i>
+            <!-- <i :class="item.icon"></i> -->
+            <i :class="item.icon" v-html="item.svg"></i>
             <template #title>{{ item.title }}</template>
           </el-menu-item>
         </template>
@@ -47,89 +48,95 @@
     </el-menu>
   </div>
 </template>
-
 <script setup>
 import { computed, watch } from "vue";
 import { useStore } from "../store";
 import { useRoute } from "vue-router";
-
 const items = [
   {
-    icon: "el-icon-lx-home",
-    index: "/dashboard",
-    title: "系统首页",
-  },
-  {
-    icon: "el-icon-lx-cascades",
-    index: "/table",
-    title: "基础表格",
-  },
-  {
-    icon: "el-icon-lx-copy",
-    index: "/tabs",
-    title: "tab选项卡",
-  },
-  {
-    icon: "el-icon-lx-calendar",
-    index: "3",
-    title: "表单相关",
-    subs: [
-      {
-        index: "/form",
-        title: "基本表单",
-      },
-      {
-        index: "/upload",
-        title: "文件上传",
-      },
-      {
-        index: "4",
-        title: "三级菜单",
-        subs: [
-          {
-            index: "/editor",
-            title: "富文本编辑器",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    icon: "el-icon-lx-emoji",
-    index: "/icon",
-    title: "自定义图标",
-  },
-  {
-    icon: "el-icon-pie-chart",
-    index: "/charts",
-    title: "schart图表",
-  },
-  {
-    icon: "el-icon-lx-global",
-    index: "/i18n",
-    title: "国际化功能",
-  },
-  {
-    icon: "el-icon-lx-warn",
-    index: "7",
-    title: "错误处理",
-    subs: [
-      {
-        index: "/permission",
-        title: "权限测试",
-      },
-      {
-        index: "/404",
-        title: "404页面",
-      },
-    ],
-  },
-  {
-    icon: "el-icon-lx-redpacket_fill",
-    index: "/donate",
-    title: "支持作者",
+    index: "/overview",
+    title: "Overview",
+    icon: "el-icon",
+    svg: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ba633cb8=""><path fill="currentColor" d="M192 413.952V896h640V413.952L512 147.328 192 413.952zM139.52 374.4l352-293.312a32 32 0 0 1 40.96 0l352 293.312A32 32 0 0 1 896 398.976V928a32 32 0 0 1-32 32H160a32 32 0 0 1-32-32V398.976a32 32 0 0 1 11.52-24.576z"></path></svg>',
   },
 ];
+// const items = [
+//   {
+//     icon: "el-icon-lx-home",
+//     index: "/dashboard",
+//     title: "系统首页",
+//   },
+//   {
+//     icon: "el-icon-lx-cascades",
+//     index: "/table",
+//     title: "基础表格",
+//   },
+//   {
+//     icon: "el-icon-lx-copy",
+//     index: "/tabs",
+//     title: "tab选项卡",
+//   },
+//   {
+//     icon: "el-icon-lx-calendar",
+//     index: "3",
+//     title: "表单相关",
+//     subs: [
+//       {
+//         index: "/form",
+//         title: "基本表单",
+//       },
+//       {
+//         index: "/upload",
+//         title: "文件上传",
+//       },
+//       {
+//         index: "4",
+//         title: "三级菜单",
+//         subs: [
+//           {
+//             index: "/editor",
+//             title: "富文本编辑器",
+//           },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     icon: "el-icon-lx-emoji",
+//     index: "/icon",
+//     title: "自定义图标",
+//   },
+//   {
+//     icon: "el-icon-pie-chart",
+//     index: "/charts",
+//     title: "schart图表",
+//   },
+//   {
+//     icon: "el-icon-lx-global",
+//     index: "/i18n",
+//     title: "国际化功能",
+//   },
+//   {
+//     icon: "el-icon-lx-warn",
+//     index: "7",
+//     title: "错误处理",
+//     subs: [
+//       {
+//         index: "/permission",
+//         title: "权限测试",
+//       },
+//       {
+//         index: "/404",
+//         title: "404页面",
+//       },
+//     ],
+//   },
+//   {
+//     icon: "el-icon-lx-redpacket_fill",
+//     index: "/donate",
+//     title: "支持作者",
+//   },
+// ];
 
 const route = useRoute();
 
@@ -138,7 +145,7 @@ const onRoutes = computed(() => {
 });
 
 const store = useStore();
-const collapse = computed(() => store.state.collapse);
+const collapse = computed(() => store.collapse);
 </script>
 
 <style scoped>

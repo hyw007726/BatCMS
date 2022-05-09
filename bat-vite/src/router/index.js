@@ -11,6 +11,12 @@ const routes = [
         component: Home,
         children: [
             {
+                path: "/overview",
+                name: "overview",
+                meta: { title: "Overview" },
+                component: () => import("../views/Overview.vue")
+            },
+            {
                 path: "/dashboard",
                 name: "dashboard",
                 meta: {
