@@ -3,7 +3,7 @@ import Home from "../views/Home.vue";
 const routes = [
     {
         path: '/',
-        redirect: '/dashboard'
+        redirect: '/overview'
     },
     {
         path: "/",
@@ -17,12 +17,12 @@ const routes = [
                 component: () => import("../views/Overview.vue")
             },
             {
-                path: "/dashboard",
-                name: "dashboard",
+                path: "/userdata",
+                name: "userdata",
                 meta: {
-                    title: '系统首页'
+                    title: 'UserData'
                 },
-                component: () => import( /* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
+                component: () => import( /* webpackChunkName: "dashboard" */ "../views/UserData.vue")
             }]
     },
     {
