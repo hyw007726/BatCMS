@@ -8,17 +8,20 @@
       ref="multipleTable"
       header-cell-class-name="table-header"
     >
-      <el-table-column
+      <el-table-column width="55" align="center" label="名次">
+        <template #default="scope">{{ scope.$index + 1 }}</template>
+      </el-table-column>
+      <!-- <el-table-column
         prop="id"
         label="ID"
         width="55"
         align="center"
-      ></el-table-column>
+      ></el-table-column> -->
       <!-- <el-table-column prop="open_id" label="openid"></el-table-column>
       <el-table-column prop="union_id" label="unionid"></el-table-column> -->
-      <el-table-column prop="nickname" label="用户名"></el-table-column>
-      <el-table-column prop="sex" label="性别"></el-table-column>
-      <el-table-column label="头像(查看大图)" align="center">
+
+      <!-- <el-table-column prop="sex" label="性别"></el-table-column> -->
+      <el-table-column label="头像(查看大图)" width="100" align="center">
         <template #default="user">
           <el-image
             class="table-td-thumb"
@@ -28,13 +31,23 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="180" align="center">
+      <el-table-column
+        prop="nickname"
+        width="200"
+        label="用户名"
+      ></el-table-column>
+      <el-table-column
+        prop="total_sign_count"
+        label="总打卡次数"
+        width="55"
+      ></el-table-column>
+      <!-- <el-table-column label="操作" width="180" align="center">
         <template #default="scope">
           <el-button type="text" icon="edit" @click="changeSex()"
             >改变性别
           </el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <!-- <el-table-column prop="name" label="用户名"></el-table-column>
         <el-table-column label="账户余额">
           <template #default="scope">￥{{ scope.row.money }}</template>
@@ -90,15 +103,26 @@
 import { ref, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import axios from "axios";
-var offset = 0;
 var tableData = ref([]);
 // axios.get("http://jsonplaceholder.typicode.com/posts")
+var limit = 50,
+  offset = 0,
+  action = 0,
+  id = 1,
+  field = "sex",
+  value = 1, //1male 0female
+  orderby = "total_sign_count",
+  order = "desc";
 axios
-  .get("http://www.batenglish.cn:3000/member", { params: { offset: offset } })
+  .get("http://www.batenglish.cn:3000/member", {
+    params: { action, limit, offset, id, field, value, orderby, order },
+  })
   .then((res) => {
     console.log(res.data);
-    offset = offset + res.data.length;
-    tableData.value = res.data;
+    if (action == 0) {
+      offset = offset + res.data.length;
+      tableData.value = res.data;
+    }
   });
 const changeSex = () => {
   alert("changeSex");
