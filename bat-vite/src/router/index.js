@@ -22,7 +22,14 @@ const routes = [
                 meta: {
                     title: 'UserData'
                 },
-                component: () => import( /* webpackChunkName: "dashboard" */ "../views/UserData.vue")
+                component: () => import( /* webpackChunkName: "UserData" */ "../views/UserData.vue")
+            }, {
+                path: "/videos",
+                name: "videos",
+                meta: {
+                    title: 'Videos'
+                },
+                component: () => import( /* webpackChunkName: "Videos" */ "../views/Videos.vue")
             }]
     },
     {
