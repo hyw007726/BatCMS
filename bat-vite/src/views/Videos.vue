@@ -1,24 +1,48 @@
 <template>
   <div>
-    <el-upload
-      ref="upload"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :limit="1"
-      :on-exceed="handleExceed"
-      :auto-upload="true"
-      accept=".mp4"
-    >
-      <template #trigger v-show="true">
-        <el-button type="primary">upload file</el-button>
+    <el-button type="primary" @click="handleAddVideo">Upload</el-button>
+
+    <el-dialog title="Upload" v-model="uploadShow" width="50%">
+      <el-date-picker
+        v-model="date"
+        type="date"
+        placeholder="Pick a day"
+        :disabled-date="disabledDate"
+        :shortcuts="shortcuts"
+        @change="dateChange"
+      />
+      <el-form label-width="60px">
+        <el-form-item label="Title">
+          <el-input v-model="form.title"></el-input>
+        </el-form-item>
+      </el-form>
+      <el-upload
+        ref="upload"
+        action="http://www.batenglish.cn:3000/upload"
+        :limit="4"
+        :on-change="handleChange"
+        :auto-upload="false"
+        accept=".mp4,.mp3,.txt,.png"
+        multiple
+        :file-list="fileList"
+      >
+        <template #trigger>
+          <el-button type="primary">Upload file</el-button>
+        </template>
+        <!-- <template #tip>
+          <div class="el-upload__tip text-red">
+            limit 1 file, new file will cover the old file
+          </div>
+        </template> -->
+      </el-upload>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="uploadShow = false">取 消</el-button>
+          <el-button type="primary" @click="saveUpload">确 定</el-button>
+        </span>
       </template>
-      <!-- <template #file> </template> -->
-      <!-- <template #tip>
-        <div class="el-upload__tip text-red">
-          limit 1 file, new file will cover the old file
-        </div>
-      </template> -->
-    </el-upload>
-    <!-- <el-button type="primary" @click="handleAddVideo">Upload</el-button> -->
+    </el-dialog>
+
     <el-table
       :data="tableData"
       border
@@ -60,20 +84,6 @@
         <span class="dialog-footer">
           <el-button @click="editVisible = false">取 消</el-button>
           <el-button type="primary" @click="saveEdit">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
-
-    <el-dialog title="Upload" v-model="uploadShow" width="50%">
-      <el-form label-width="60px">
-        <el-form-item label="upload">
-          <!-- <el-input v-model="form.title"></el-input> -->
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="uploadShow = false">取 消</el-button>
-          <el-button type="primary" @click="saveUpload">确 定</el-button>
         </span>
       </template>
     </el-dialog>
@@ -160,18 +170,38 @@ const saveEdit = () => {
 };
 const uploadShow = ref(false);
 const upload = ref();
-const handleExceed = (files) => {
-  console.log(files);
+const fileList = ref([]);
+const handleChange = (file, files) => {
+  // console.log(file, files);
+  console.log(file.raw);
 };
 const handleAddVideo = () => {
-  upload.value.handleStart();
+  uploadShow.value = true;
 };
 const saveUpload = () => {
-  // axios
-  //   .get("http://www.batenglish.cn:3000/course", {
-  //     params: {
-  //       action: 3,}
-  //   }).then()
+  upload.value.submit();
+};
+const date = ref("");
+
+const shortcuts = [
+  {
+    text: "Today",
+    value: new Date(),
+  },
+  {
+    text: "Yesterday",
+    value: () => {
+      const date = new Date();
+      date.setTime(date.getTime() - 3600 * 1000 * 24);
+      return date;
+    },
+  },
+];
+const disabledDate = (time) => {
+  return time.getTime() > Date.now();
+};
+const dateChange = (d) => {
+  console.log(d);
 };
 </script>
 
