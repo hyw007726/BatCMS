@@ -16,7 +16,9 @@
         align="center"
       ></el-table-column>
       <el-table-column width="150" align="center" label="Date">
-        <template #default="scope">{{ scope.row.date.substr(0, 10) }}</template>
+        <template #default="scope">{{
+          scope.row.date?.substr(0, 10)
+        }}</template>
       </el-table-column>
       <el-table-column prop="title" width="450" align="center" label="Title">
       </el-table-column>
