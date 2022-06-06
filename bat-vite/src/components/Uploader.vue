@@ -56,12 +56,12 @@ const handleChange = (file, files) => {
 
 const saveUpload = () => {
   if (!data.date) {
-    ElMessage.error("Oops, you must choose a date.");
+    ElMessage.error("You must choose a date.");
     datePicker.value.focus();
   } else upload.value.submit();
 };
 const handleSuccess = (res) => {
-  // console.log(res);
+  console.log(res);
   uploadShow.value = false;
   // upload.value.clearFiles();
   fileList.value = [];
