@@ -1,17 +1,24 @@
 <template>
   <div>
     <el-dialog v-model="uploadShow" title="Upload" width="50%">
-      <span style="width: 60px; padding: 5px 15px">Date</span>
-      <el-date-picker
-        ref="datePicker"
-        v-model="data.date"
-        type="date"
-        placeholder="Pick a day"
-        :disabled-date="disabledDate"
-        :shortcuts="shortcuts"
-        @change="dateChange"
-      />
-
+      <el-form label-width="60px">
+        <el-form-item label="Title">
+          <el-input v-model="data.title" style="width: 300px"></el-input>
+        </el-form-item>
+      </el-form>
+      <div>
+        <span style="width: 60px; padding: 15px 15px">Date</span>
+        <el-date-picker
+          ref="datePicker"
+          v-model="data.date"
+          type="date"
+          placeholder="Pick a day"
+          :disabled-date="disabledDate"
+          :shortcuts="shortcuts"
+          @change="dateChange"
+        />
+      </div>
+      <br />
       <el-upload
         ref="upload"
         action="http://www.batenglish.cn:3000/upload"
@@ -47,7 +54,10 @@ const upload = ref();
 const datePicker = ref();
 const fileList = ref([]);
 const data = reactive({
-  date: "",
+  date: "test",
+  id: "test",
+  fileCount: 0,
+  title: "",
 });
 const handleChange = (file, files) => {
   // console.log(file, files);
@@ -58,7 +68,12 @@ const saveUpload = () => {
   if (!data.date) {
     ElMessage.error("You must choose a date.");
     datePicker.value.focus();
-  } else upload.value.submit();
+  } else {
+    if (!data.title) data.title = "Test";
+    data.id = Date.parse(new Date());
+    data.fileCount = fileList.value.length;
+    upload.value.submit();
+  }
 };
 const handleSuccess = (res) => {
   console.log(res);
