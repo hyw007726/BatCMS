@@ -21,7 +21,7 @@
       <el-table-column prop="union_id" label="unionid"></el-table-column> -->
 
       <!-- <el-table-column prop="sex" label="性别"></el-table-column> -->
-      <el-table-column label="头像(查看大图)" width="100" align="center">
+      <el-table-column label="头像" width="100" align="center">
         <template #default="user">
           <el-image
             class="table-td-thumb"
@@ -38,8 +38,8 @@
       ></el-table-column>
       <el-table-column
         prop="total_sign_count"
-        label="总打卡次数"
-        width="55"
+        label="打卡数"
+        width="60"
       ></el-table-column>
       <!-- <el-table-column label="操作" width="180" align="center">
         <template #default="scope">

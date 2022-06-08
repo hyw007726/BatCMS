@@ -123,7 +123,7 @@
 <script setup>
 import { reactive } from "vue";
 import vChart from "../charts/Chart.vue";
-import UserTable from "./UserTable.vue";
+import UserTable from "../components/UserTable.vue";
 
 const name = localStorage.getItem("ms_username");
 const role = name === "wesley" ? "Admin" : "Visitor";
